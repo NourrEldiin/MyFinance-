@@ -1,17 +1,26 @@
-namespace personal_finance_manager
+namespace MyFinance.Login
 {
     public partial class frmRegister : Form
     {
-        public frmRegister()
+        private readonly frmLogin loginForm;
+
+        public frmRegister(frmLogin login)
         {
             InitializeComponent();
+
+            loginForm = login;
+
+            FormClosed += (_, _) =>
+            {
+                if (!loginForm.IsDisposed)
+                    loginForm.Show();
+            };
         }
 
-        private void lnkLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void lnkLogin_LinkClicked(
+            object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmLogin login = new frmLogin();
-            login.Show();
-            this.Hide();
+            Close();
         }
     }
 }

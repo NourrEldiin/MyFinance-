@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace personal_finance_manager.Properties {
+namespace MyFinance.Login.Properties {
     using System;
     
     

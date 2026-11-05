@@ -1,4 +1,4 @@
-﻿namespace personal_finance_manager
+﻿namespace MyFinance.Login
 {
     partial class frmRegister
     {

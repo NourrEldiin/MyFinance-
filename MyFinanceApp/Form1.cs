@@ -7,18 +7,150 @@ public partial class Form1 : Form
     private readonly Color background = Color.FromArgb(246, 247, 251);
     private readonly Color muted = Color.FromArgb(125, 135, 153);
 
+    private readonly Panel contentHost = new Panel();
+
+    private IncomeForm? incomePage;
+    private ExpensesForm? expensesPage;
+
+    private Button reportsButton = null!;
+    private Button incomeButton = null!;
+    private Button expensesButton = null!;
+
     public Form1()
     {
         InitializeComponent();
 
-        Text = "MyFinance - Financial Reports";
+        Text = "MyFinance";
         StartPosition = FormStartPosition.CenterScreen;
         ClientSize = new Size(1280, 800);
         MinimumSize = new Size(1000, 650);
         BackColor = background;
         Font = new Font("Segoe UI", 9F);
 
-        BuildReportsPage();
+        BuildMainLayout();
+        ShowReportsPage();
+    }
+
+    private void BuildMainLayout()
+    {
+        Panel sidebar = new Panel
+        {
+            Dock = DockStyle.Left,
+            Width = 235,
+            BackColor = navy
+        };
+
+        Controls.Add(sidebar);
+
+        Label logo = new Label
+        {
+            Text = "MyFinance",
+            ForeColor = Color.White,
+            Font = new Font("Segoe UI", 19, FontStyle.Bold),
+            Location = new Point(25, 28),
+            AutoSize = true
+        };
+
+        sidebar.Controls.Add(logo);
+
+        Label menuHeading = new Label
+        {
+            Text = "MAIN MENU",
+            ForeColor = Color.FromArgb(150, 160, 180),
+            Font = new Font("Segoe UI", 8, FontStyle.Bold),
+            Location = new Point(25, 105),
+            AutoSize = true
+        };
+
+        sidebar.Controls.Add(menuHeading);
+
+        reportsButton = CreateNavigationButton("Financial Reports", 140);
+        incomeButton = CreateNavigationButton("Income", 192);
+        expensesButton = CreateNavigationButton("Expenses", 244);
+
+        Button budgetButton = CreateNavigationButton("Budget Planning", 296);
+        budgetButton.Enabled = false;
+        budgetButton.Cursor = Cursors.Default;
+
+        reportsButton.Click += (_, _) => ShowReportsPage();
+        incomeButton.Click += (_, _) => ShowIncomePage();
+        expensesButton.Click += (_, _) => ShowExpensesPage();
+
+        sidebar.Controls.Add(reportsButton);
+        sidebar.Controls.Add(incomeButton);
+        sidebar.Controls.Add(expensesButton);
+        sidebar.Controls.Add(budgetButton);
+
+        contentHost.Dock = DockStyle.Fill;
+        contentHost.BackColor = background;
+
+        Controls.Add(contentHost);
+        contentHost.BringToFront();
+    }
+
+    private Button CreateNavigationButton(string text, int y)
+    {
+        Button button = new Button
+        {
+            Text = "   " + text,
+            Location = new Point(12, y),
+            Size = new Size(211, 43),
+            FlatStyle = FlatStyle.Flat,
+            TextAlign = ContentAlignment.MiddleLeft,
+            Font = new Font("Segoe UI", 10),
+            ForeColor = Color.FromArgb(195, 202, 216),
+            BackColor = navy,
+            Cursor = Cursors.Hand
+        };
+
+        button.FlatAppearance.BorderSize = 0;
+
+        return button;
+    }
+
+    private void SetActiveButton(Button activeButton)
+    {
+        foreach (Button button in new[]
+        {
+            reportsButton,
+            incomeButton,
+            expensesButton
+        })
+        {
+            button.BackColor = navy;
+            button.ForeColor = Color.FromArgb(195, 202, 216);
+            button.Font = new Font("Segoe UI", 10);
+        }
+
+        activeButton.BackColor = blue;
+        activeButton.ForeColor = Color.White;
+        activeButton.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+    }
+
+    private void ShowReportsPage()
+    {
+        SetActiveButton(reportsButton);
+        BuildReportsPage(contentHost);
+    }
+
+    private void ShowIncomePage()
+    {
+        SetActiveButton(incomeButton);
+
+        incomePage ??= new IncomeForm();
+
+        contentHost.Controls.Clear();
+        contentHost.Controls.Add(incomePage.GetPageContent());
+    }
+
+    private void ShowExpensesPage()
+    {
+        SetActiveButton(expensesButton);
+
+        expensesPage ??= new ExpensesForm();
+
+        contentHost.Controls.Clear();
+        contentHost.Controls.Add(expensesPage.GetPageContent());
     }
 
     private void AddSummaryCard(
@@ -30,6 +162,7 @@ public partial class Form1 : Form
             Size = new Size(275, 135),
             BackColor = Color.White
         };
+
         parent.Controls.Add(card);
 
         Label headingLabel = new Label
@@ -40,6 +173,7 @@ public partial class Form1 : Form
             Font = new Font("Segoe UI", 10),
             ForeColor = muted
         };
+
         card.Controls.Add(headingLabel);
 
         Label amountLabel = new Label
@@ -50,6 +184,7 @@ public partial class Form1 : Form
             Font = new Font("Segoe UI", 22, FontStyle.Bold),
             ForeColor = Color.FromArgb(35, 45, 65)
         };
+
         card.Controls.Add(amountLabel);
     }
 }

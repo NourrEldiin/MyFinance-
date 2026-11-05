@@ -2,82 +2,20 @@ namespace MyFinance;
 
 public partial class Form1
 {
-    private void BuildReportsPage()
+    private void BuildReportsPage(Panel host)
     {
-        Controls.Clear();
 
-        // Sidebar
-        Panel sidebar = new Panel
-        {
-            Dock = DockStyle.Left,
-            Width = 235,
-            BackColor = navy
-        };
-        Controls.Add(sidebar);
+	    host.Controls.Clear();
 
-        Label logo = new Label
-        {
-            Text = "MyFinance",
-            ForeColor = Color.White,
-            Font = new Font("Segoe UI", 19, FontStyle.Bold),
-            Location = new Point(25, 28),
-            AutoSize = true
-        };
-        sidebar.Controls.Add(logo);
-
-        Label menuHeading = new Label
-        {
-            Text = "MAIN MENU",
-            ForeColor = Color.FromArgb(150, 160, 180),
-            Font = new Font("Segoe UI", 8, FontStyle.Bold),
-            Location = new Point(25, 105),
-            AutoSize = true
-        };
-        sidebar.Controls.Add(menuHeading);
-
-        string[] menuItems =
-        {
-            "Dashboard",
-            "Income",
-            "Expenses",
-            "Budget Planning",
-            "Financial Reports"
-        };
-
-        for (int i = 0; i < menuItems.Length; i++)
-        {
-            string menuItem = menuItems[i];
-            bool active = menuItem == "Financial Reports";
-
-            Button menuButton = new Button
-            {
-                Text = "   " + menuItem,
-                Location = new Point(12, 140 + i * 52),
-                Size = new Size(211, 43),
-                FlatStyle = FlatStyle.Flat,
-                TextAlign = ContentAlignment.MiddleLeft,
-                Font = new Font("Segoe UI", 10,
-                    active ? FontStyle.Bold : FontStyle.Regular),
-                ForeColor = active ? Color.White :
-                    Color.FromArgb(195, 202, 216),
-                BackColor = active ? blue : navy,
-                Cursor = Cursors.Hand
-            };
-
-            menuButton.FlatAppearance.BorderSize = 0;
-            sidebar.Controls.Add(menuButton);
-        }
-
-        // Main content
-        Panel content = new Panel
-        {
-            Dock = DockStyle.Fill,
-            BackColor = background,
-            Padding = new Padding(35, 28, 35, 25)
-        };
-
-        Controls.Add(content);
-        content.BringToFront();
+   	 // Main content
+   	Panel content = new Panel
+    	{
+        Dock = DockStyle.Fill,
+        BackColor = background,
+        Padding = new Padding(35, 28, 35, 25)
+	};
+	
+	host.Controls.Add(content);
 
         // Page heading
         Label title = new Label

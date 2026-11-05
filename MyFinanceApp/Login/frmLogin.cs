@@ -6,20 +6,31 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace personal_finance_manager
+namespace MyFinance.Login
 {
+
     public partial class frmLogin : Form
     {
         public frmLogin()
         {
             InitializeComponent();
+            btnLogin.Click += btnLogin_Click;
         }
+        private void btnLogin_Click(object? sender, EventArgs e)
+            {
+                Form1 main = new Form1();
 
-        private void lnkRegister_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+                main.FormClosed += (_, _) => Close();
+
+                main.Show();
+                Hide();
+            }
+        private void lnkRegister_LinkClicked(
+            object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmRegister register = new frmRegister();
+            frmRegister register = new frmRegister(this);
             register.Show();
-            this.Hide();
+            Hide();
         }
     }
 }

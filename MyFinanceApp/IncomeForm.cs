@@ -2,13 +2,22 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PersonalFinanceUI
+namespace MyFinance
 {
     public partial class IncomeForm : Form
     {
         public IncomeForm()
         {
             InitializeComponent();
+        }
+
+        public Panel GetPageContent()
+        {
+            sidebarPanel.Visible = false;
+            mainPanel.Location = Point.Empty;
+            mainPanel.Dock = DockStyle.Fill;
+
+            return mainPanel;
         }
 
         private void NavButton_Click(object sender, EventArgs e)

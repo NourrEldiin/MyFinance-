@@ -5,18 +5,29 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-namespace WinFormsApp2
+namespace MyFinance
 {
     public partial class ExpensesForm : Form
     {
         private Dictionary<Button, Color> originalButtonColors =
             new Dictionary<Button, Color>();
 
-        public ExpensesForm()
-        {
-            InitializeComponent();
-            this.Load += ExpensesForm_Load;
-        }
+            public ExpensesForm()
+            {
+                InitializeComponent();
+                this.Load += ExpensesForm_Load;
+            }
+
+            public Panel GetPageContent()
+            {
+                ExpensesForm_Load(this, EventArgs.Empty);
+
+                pnlSidebar.Visible = false;
+                pnlMain.Location = Point.Empty;
+                pnlMain.Dock = DockStyle.Fill;
+
+                return pnlMain;
+            }
 
         private GraphicsPath CreateRoundedPath(
             int width, int height, int radius)

@@ -15,6 +15,7 @@ public partial class Form1 : Form
     private Button reportsButton = null!;
     private Button incomeButton = null!;
     private Button expensesButton = null!;
+    private Button budgetButton = null!;
 
     public Form1()
     {
@@ -68,13 +69,12 @@ public partial class Form1 : Form
         incomeButton = CreateNavigationButton("Income", 192);
         expensesButton = CreateNavigationButton("Expenses", 244);
 
-        Button budgetButton = CreateNavigationButton("Budget Planning", 296);
-        budgetButton.Enabled = false;
-        budgetButton.Cursor = Cursors.Default;
+        budgetButton = CreateNavigationButton("Budget Planning", 296);
 
         reportsButton.Click += (_, _) => ShowReportsPage();
         incomeButton.Click += (_, _) => ShowIncomePage();
         expensesButton.Click += (_, _) => ShowExpensesPage();
+        budgetButton.Click += (_, _) => ShowBudgetPage();
 
         sidebar.Controls.Add(reportsButton);
         sidebar.Controls.Add(incomeButton);
@@ -131,6 +131,12 @@ public partial class Form1 : Form
     {
         SetActiveButton(reportsButton);
         BuildReportsPage(contentHost);
+    }
+
+    private void ShowBudgetPage()
+    {
+        SetActiveButton(budgetButton);
+        BuildBudgetPage(contentHost);
     }
 
     private void ShowIncomePage()

@@ -90,7 +90,7 @@ namespace MyFinance
             }
         }
 
-        private void ExpensesForm_Load(object sender, EventArgs e)
+        private void ExpensesForm_Load(object? sender, EventArgs e)
         {
             // Logo M: rounded square
             MakeRoundedPanel(pnlLogo, 8);
@@ -132,10 +132,9 @@ namespace MyFinance
             SetupSidebarHover(pnlSidebar);
         }
 
-        private void DrawSoftBorder(object sender, PaintEventArgs e)
+        private void DrawSoftBorder(object? sender, PaintEventArgs e)
         {
-            Control control = sender as Control;
-            if (control == null) return;
+            if (sender is not Control control) return;
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -148,7 +147,7 @@ namespace MyFinance
             }
         }
 
-        private void DrawSearchBorder(object sender, PaintEventArgs e)
+        private void DrawSearchBorder(object? sender, PaintEventArgs e)
         {
             if (txtSearchExpense == null) return;
 
@@ -200,19 +199,17 @@ namespace MyFinance
             }
         }
 
-        private void Sidebar_MouseEnter(object sender, EventArgs e)
+        private void Sidebar_MouseEnter(object? sender, EventArgs e)
         {
-            Button btn = sender as Button;
-            if (btn == null) return;
+            if (sender is not Button btn) return;
 
             btn.BackColor = Color.FromArgb(43, 59, 84);
             MakeRoundedButton(btn, 8);
         }
 
-        private void Sidebar_MouseLeave(object sender, EventArgs e)
+        private void Sidebar_MouseLeave(object? sender, EventArgs e)
         {
-            Button btn = sender as Button;
-            if (btn == null) return;
+            if (sender is not Button btn) return;
 
             if (originalButtonColors.ContainsKey(btn))
             {

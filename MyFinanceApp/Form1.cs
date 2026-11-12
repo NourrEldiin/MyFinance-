@@ -12,6 +12,7 @@ public partial class Form1 : Form
     private IncomeForm? incomePage;
     private ExpensesForm? expensesPage;
 
+    private Button dashboardButton = null!;
     private Button reportsButton = null!;
     private Button incomeButton = null!;
     private Button expensesButton = null!;
@@ -29,7 +30,7 @@ public partial class Form1 : Form
         Font = new Font("Segoe UI", 9F);
 
         BuildMainLayout();
-        ShowReportsPage();
+        ShowDashboardPage();
     }
 
     private void BuildMainLayout()
@@ -65,21 +66,23 @@ public partial class Form1 : Form
 
         sidebar.Controls.Add(menuHeading);
 
-        reportsButton = CreateNavigationButton("Financial Reports", 140);
+        dashboardButton = CreateNavigationButton("Dashboard", 140);
         incomeButton = CreateNavigationButton("Income", 192);
         expensesButton = CreateNavigationButton("Expenses", 244);
+        budgetButton = CreateNavigationButton("Budget", 296);
+        reportsButton = CreateNavigationButton("Reports", 348);
 
-        budgetButton = CreateNavigationButton("Budget Planning", 296);
-
-        reportsButton.Click += (_, _) => ShowReportsPage();
+        dashboardButton.Click += (_, _) => ShowDashboardPage();
         incomeButton.Click += (_, _) => ShowIncomePage();
         expensesButton.Click += (_, _) => ShowExpensesPage();
         budgetButton.Click += (_, _) => ShowBudgetPage();
+        reportsButton.Click += (_, _) => ShowReportsPage();
 
-        sidebar.Controls.Add(reportsButton);
+        sidebar.Controls.Add(dashboardButton);
         sidebar.Controls.Add(incomeButton);
         sidebar.Controls.Add(expensesButton);
         sidebar.Controls.Add(budgetButton);
+        sidebar.Controls.Add(reportsButton);
 
         contentHost.Dock = DockStyle.Fill;
         contentHost.BackColor = background;
@@ -112,9 +115,11 @@ public partial class Form1 : Form
     {
         foreach (Button button in new[]
         {
-            reportsButton,
+            dashboardButton,
             incomeButton,
-            expensesButton
+            expensesButton,
+            budgetButton,
+            reportsButton
         })
         {
             button.BackColor = navy;
@@ -125,6 +130,12 @@ public partial class Form1 : Form
         activeButton.BackColor = blue;
         activeButton.ForeColor = Color.White;
         activeButton.Font = new Font("Segoe UI", 10, FontStyle.Bold);
+    }
+
+    private void ShowDashboardPage()
+    {
+        SetActiveButton(dashboardButton);
+        BuildDashboardPage(contentHost);
     }
 
     private void ShowReportsPage()
